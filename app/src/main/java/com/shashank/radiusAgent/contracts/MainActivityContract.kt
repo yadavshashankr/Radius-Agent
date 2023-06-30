@@ -8,7 +8,7 @@ interface MainActivityContract {
 
     interface View{
         fun onLoading()
-        suspend fun onSuccess(model: MainModel)
+        fun onSuccess(model: MainModel)
         fun onError(message:String)
     }
 

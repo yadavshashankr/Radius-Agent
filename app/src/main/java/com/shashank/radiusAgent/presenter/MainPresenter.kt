@@ -38,11 +38,11 @@ class MainPresenter(
     }
 
     private suspend fun dataSelector(){
+        scope.launch {
         if(model.getData() != null){
             view.onSuccess(model.getData())
         }else{
-            scope.launchOnMain {
-                view.onError("Internet not available!")
+            view.onError("Internet not available!")
             }
         }
     }
