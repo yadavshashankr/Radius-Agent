@@ -129,7 +129,7 @@ class MainPresenter(
         return facilitiesList
     }
 
-    fun isMoreThan24Hours() : Boolean{
+    private fun isMoreThan24Hours() : Boolean{
         return Prefs.getLastRecordedTime() == 0L || System.currentTimeMillis() >= Prefs.getLastRecordedTime()  + 24 * 60 * 60 * 1000
     }
 }
