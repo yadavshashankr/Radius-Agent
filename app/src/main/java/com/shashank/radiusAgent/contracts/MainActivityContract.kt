@@ -25,7 +25,7 @@ interface MainActivityContract {
             suspend fun onSuccess()
         }
         suspend fun getApiData(onFinishListener: OnFinishListener)
-        suspend fun getData() : MainModel
+        suspend fun getDBData() : MainModel?
     }
 
     interface OptionsProcessor{

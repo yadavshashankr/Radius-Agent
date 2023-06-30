@@ -18,7 +18,6 @@ companion object{
         const val ROOMS = "rooms"
         const val NO_ROOMS = "no-room"
 
-
         const val SWIMMING = "swimming"
         const val GARDEN = "garden"
         const val GARAGE = "garage"

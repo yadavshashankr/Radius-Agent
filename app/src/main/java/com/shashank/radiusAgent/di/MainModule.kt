@@ -26,12 +26,6 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun getAppDatabase(context: Application): AppDatabase {
-        return AppDatabase.getAppDBInstance(context)
-    }
-
-    @Provides
-    @Singleton
     fun getAppDao(appDatabase: AppDatabase): Dao {
         return appDatabase.getDao()
     }
@@ -40,6 +34,12 @@ object MainModule {
     @Singleton
     fun providesMainModel(apiService: ApiService, dao: Dao): NetworkRepository {
         return NetworkRepository(apiService, dao)
+    }
+
+    @Provides
+    @Singleton
+    fun getAppDatabase(context: Application): AppDatabase {
+        return AppDatabase.getAppDBInstance(context)
     }
 
 }

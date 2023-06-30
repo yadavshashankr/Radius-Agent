@@ -24,31 +24,35 @@ class MainPresenter(
         }
     }
 
-    override fun onDestroy() {
-        scope.cancel()
+    private fun isMoreThan24Hours() : Boolean{
+        return Prefs.getLastRecordedTime() == 0L || System.currentTimeMillis() >= Prefs.getLastRecordedTime()  + 24 * 60 * 60 * 1000
     }
-
 
     override fun onLoading() {
         scope.launchOnMain { view.onLoading() }
+    }
+
+    override suspend fun onSuccess() {
+        scope.launch {view.onSuccess(model.getDBData() as MainModel)}
     }
 
     override fun onError(message: String) {
         scope.launch { getDBData() }
     }
 
-    private suspend fun getDBData(){
-        scope.launch {
-        if(model.getData() != null){
-            view.onSuccess(model.getData())
-        }else{
-            view.onError("Internet not available!")
-            }
-        }
+    override fun onDestroy() {
+        scope.cancel()
     }
 
-    override suspend fun onSuccess() {
-        scope.launch {view.onSuccess(model.getData())}
+    private suspend fun getDBData(){
+        scope.launch {
+        val dbData = model.getDBData()
+            if(dbData != null){
+                view.onSuccess(dbData)
+            }else{
+                view.onError("Internet not available!")
+            }
+        }
     }
 
     override fun disableSelectedOptionsState(facilitiesList: ArrayList<FacilityModel>, valueFacilityId : String, valueOptionsId : String): ArrayList<FacilityModel> {
@@ -58,7 +62,7 @@ class MainPresenter(
         while(i < facilitiesList.size){
             while (j < facilitiesList[i].options?.size as Int){
                 facilitiesList[i].options?.get(j)?.isEnabled =
-                if (valueFacilityId.equals("") || valueOptionsId.equals("")) true
+                if (valueFacilityId == "" || valueOptionsId == "") true
                 else valueFacilityId != facilitiesList[i].facility_id as String || valueOptionsId != facilitiesList[i].options?.get(j)?.id as String
 
                 j++
@@ -127,9 +131,5 @@ class MainPresenter(
             i++
         }
         return facilitiesList
-    }
-
-    private fun isMoreThan24Hours() : Boolean{
-        return Prefs.getLastRecordedTime() == 0L || System.currentTimeMillis() >= Prefs.getLastRecordedTime()  + 24 * 60 * 60 * 1000
     }
 }

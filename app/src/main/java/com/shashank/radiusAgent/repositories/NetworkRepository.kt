@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class NetworkRepository @Inject constructor(private val apiService: ApiService, private  val dao: Dao) : MainActivityContract.Model {
 
-    override suspend fun fetchModel(onFinishListener: MainActivityContract.Model.OnFinishListener) {
+    override suspend fun getApiData(onFinishListener: MainActivityContract.Model.OnFinishListener) {
         onFinishListener.onLoading()
         try{
             val response = apiService.getCategory()
@@ -30,7 +30,7 @@ class NetworkRepository @Inject constructor(private val apiService: ApiService, 
         }
 
     }
-    override suspend fun getData(): MainModel {
+    override suspend fun getDBData(): MainModel {
         return dao.getAllProperties()
     }
 }

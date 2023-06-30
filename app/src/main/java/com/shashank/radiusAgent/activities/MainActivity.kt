@@ -20,18 +20,17 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOptionsContract {
 
-    private lateinit var facilitiesList : ArrayList<FacilityModel>
     @Inject
     lateinit var apiService : ApiService
     @Inject
     lateinit var dao : Dao
-
+    private lateinit var facilitiesList : ArrayList<FacilityModel>
     private lateinit var presenter : MainPresenter
     private var _binding : ActivityMainBinding? = null
     private val binding : ActivityMainBinding
     get() = _binding as ActivityMainBinding
-
     private val mainAdapter = MainAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
