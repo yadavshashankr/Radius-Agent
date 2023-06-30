@@ -3,7 +3,7 @@ MVP, Retrofit, RoomDB, Dagger-Hilt, Data Binding, Coroutines, Dark Mode.
 
 This project is an offline-first Android application. 
 
-- As soon as the app starts and if the data in local database has not been refreshed for the past 24 hours then the app will retrieve fresh data from network call else it will retrieve from local database. 
+- As soon as the app starts and if the data in local database has not been refreshed for the past 24 hours then the app will retrieve fresh data from network call and re-populate the database. If the data has been refreshed in the past 24 hours then app will retrieve data from local database.
 
 - Coroutines, Data binding has been used profoundly. 
 
