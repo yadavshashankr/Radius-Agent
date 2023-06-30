@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
 
         initView()
 
-        presenter.getData(presenter.isMoreThan24Hours())
+        presenter.getData()
 
     }
 

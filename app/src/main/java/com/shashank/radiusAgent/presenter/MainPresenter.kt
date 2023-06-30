@@ -18,9 +18,9 @@ class MainPresenter(
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    override fun getData(fromApi : Boolean) {
+    override fun getData() {
         scope.launch {
-            if (fromApi)model.fetchModel(onFinishListener = this@MainPresenter)else dataSelector()
+            if (isMoreThan24Hours())model.fetchModel(onFinishListener = this@MainPresenter) else dataSelector()
         }
     }
 

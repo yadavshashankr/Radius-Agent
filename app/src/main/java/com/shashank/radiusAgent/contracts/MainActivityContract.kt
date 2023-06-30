@@ -13,7 +13,7 @@ interface MainActivityContract {
     }
 
     interface Presenter{
-        fun getData(fromApi : Boolean)
+        fun getData()
         fun onDestroy()
     }
 
