@@ -84,6 +84,8 @@ dependencies {
     implementation 'androidx.room:room-ktx:2.5.2'
     kapt "androidx.room:room-compiler:2.5.2"
 
+    //Interceptors
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.10.0'
 
     //Space & Text size units
     implementation 'com.intuit.sdp:sdp-android:1.1.0'

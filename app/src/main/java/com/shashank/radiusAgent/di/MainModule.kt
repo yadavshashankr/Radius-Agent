@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object MainModule {
-    
+
     @Provides
     fun provideApiService(): ApiService {
         return Retrofit.Builder().baseUrl(Constants.HOST_URL)
@@ -26,7 +26,13 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun getAppDao(appDatabase: AppDatabase): Dao {
+    fun providesAppDataBase(context: Application): AppDatabase {
+        return AppDatabase.getAppDBInstance(context)
+    }
+
+    @Provides
+    @Singleton
+    fun providesDao(appDatabase: AppDatabase): Dao {
         return appDatabase.getDao()
     }
 
@@ -35,11 +41,4 @@ object MainModule {
     fun providesMainModel(apiService: ApiService, dao: Dao): NetworkRepository {
         return NetworkRepository(apiService, dao)
     }
-
-    @Provides
-    @Singleton
-    fun getAppDatabase(context: Application): AppDatabase {
-        return AppDatabase.getAppDBInstance(context)
-    }
-
 }
