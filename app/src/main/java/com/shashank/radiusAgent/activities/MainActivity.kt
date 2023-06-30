@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
         scope.launchOnMain {
             binding.progress.visibility= View.GONE
             facilitiesList = presenter.processOptions(model)
-            mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity)
+            mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity, 0)
         }
     }
 
@@ -77,8 +77,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
         super.onDestroy()
     }
 
-    override fun disableSelectedOptionsState(valueFacilityID: String, valueOptionsID: String) {
+    override fun disableSelectedOptionsState(valueFacilityID: String, valueOptionsID: String, selectedPosition : Int) {
         val facilitiesList = presenter.disableSelectedOptionsState(facilitiesList, valueFacilityID, valueOptionsID)
-        mainAdapter.addItems(this, facilitiesList, this)
+        mainAdapter.addItems(this, facilitiesList, this, selectedPosition)
     }
 }

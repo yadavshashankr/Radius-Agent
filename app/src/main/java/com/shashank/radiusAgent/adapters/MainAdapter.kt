@@ -17,11 +17,13 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
     private var list = ArrayList<FacilityModel>()
     private lateinit var context: Context
     private lateinit var selectedOptionsContract: SelectedOptionsContract
+    private var selectedPosition = 0
 
-    fun addItems(context: Context, facilitiesList : ArrayList<FacilityModel>, selectedOptionsContract: SelectedOptionsContract){
+    fun addItems(context: Context, facilitiesList : ArrayList<FacilityModel>, selectedOptionsContract: SelectedOptionsContract, selectedPosition : Int){
         this.context = context
         this.selectedOptionsContract = selectedOptionsContract
         this.list = facilitiesList
+        this.selectedPosition = selectedPosition
         notifyDataSetChanged()
     }
 
@@ -42,8 +44,9 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
         binding.rvOptions.layoutManager = LinearLayoutManager(context.applicationContext, LinearLayoutManager.HORIZONTAL, false)
         val optionsAdapter = OptionsAdapter()
         binding.rvOptions.adapter = optionsAdapter
-        optionsAdapter.addItems(context, item.options as ArrayList<OptionsModel>, selectedOptionsContract)
 
+        binding.rvOptions.smoothScrollToPosition(selectedPosition)
+        optionsAdapter.addItems(context, item.options as ArrayList<OptionsModel>, selectedOptionsContract)
     }
 
     override fun getItemCount(): Int {

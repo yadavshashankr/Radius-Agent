@@ -35,6 +35,7 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         val binding = holder.viewDataBinding
         val item = this.list[position]
         binding.optionsModel = item
@@ -49,12 +50,13 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
             try {
                 val valueFacilityID = values?.get(0)
                 val valueOptionsID = values?.get(1)
-                selectedOptionsContract.disableSelectedOptionsState(valueFacilityID as String, valueOptionsID as String)
+                selectedOptionsContract.disableSelectedOptionsState(valueFacilityID as String, valueOptionsID as String, position)
             }catch (e :java.lang.Exception){
                 e.printStackTrace()
-                selectedOptionsContract.disableSelectedOptionsState("", "")
+                selectedOptionsContract.disableSelectedOptionsState("", "", position)
             }
         }
+
     }
 
     override fun getItemCount(): Int {
