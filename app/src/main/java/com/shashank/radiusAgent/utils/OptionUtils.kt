@@ -1,11 +1,15 @@
 package com.shashank.radiusAgent.utils
 
 import android.content.Context
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
+import android.os.Build
 import androidx.core.content.ContextCompat
 import com.shashank.radiusAgent.R
 import com.shashank.radiusAgent.globals.Constants
+
 
 class OptionUtils {
      companion object {
@@ -25,10 +29,12 @@ class OptionUtils {
          }
          private fun processIconState(context: Context, icon: Int, isEnabled : Boolean): Drawable? {
              val mIcon = ContextCompat.getDrawable(context, icon)
-             mIcon?.setColorFilter(
-                 if(isEnabled) ContextCompat.getColor(context, R.color.blue_cff) else ContextCompat.getColor(context, R.color.gray_808),
-                 PorterDuff.Mode.MULTIPLY
-             )
+             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                 mIcon?.colorFilter = BlendModeColorFilter( if(isEnabled) ContextCompat.getColor(context, R.color.blue_cff) else ContextCompat.getColor(context, R.color.gray_808), BlendMode.SRC_ATOP)
+             } else {
+                 @Suppress("DEPRECATION")
+                 mIcon?.setColorFilter(if(isEnabled) ContextCompat.getColor(context, R.color.blue_cff) else ContextCompat.getColor(context, R.color.gray_808), PorterDuff.Mode.SRC_ATOP)
+             }
              return mIcon
          }
      }
