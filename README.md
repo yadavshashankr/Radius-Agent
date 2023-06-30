@@ -11,13 +11,7 @@ This project is an offline-first Android application.
 
 - App is also compatible for both Light and Dark modes.
 
-- Also a space & text sizing unit dependency called as sdp and ssp is used. This dependency helps to have consistent UI accross all screen sizes including tablets.
-
-
-E.g.
-
-App's first launch & Offline mode respectively
-
+- A Space & Text sizing unit dependencies called as sdp and ssp is used. This dependency helps to have consistent UI accross all screen sizes including tablets.
 
 
 https://github.com/yadavshashankr/Radius-Agent/assets/81215694/93f6ddf6-b2f1-492d-8c45-49db6a14cb34
