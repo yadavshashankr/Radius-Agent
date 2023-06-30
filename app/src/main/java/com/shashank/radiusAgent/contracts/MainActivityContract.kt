@@ -24,7 +24,7 @@ interface MainActivityContract {
             fun onError(message:String)
             suspend fun onSuccess()
         }
-        suspend fun fetchModel(onFinishListener: OnFinishListener)
+        suspend fun getApiData(onFinishListener: OnFinishListener)
         suspend fun getData() : MainModel
     }
 

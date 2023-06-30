@@ -20,7 +20,7 @@ class MainPresenter(
 
     override fun getData() {
         scope.launch {
-            if (isMoreThan24Hours())model.fetchModel(onFinishListener = this@MainPresenter) else dataSelector()
+            if (isMoreThan24Hours())model.getApiData(onFinishListener = this@MainPresenter) else getDBData()
         }
     }
 
@@ -34,10 +34,10 @@ class MainPresenter(
     }
 
     override fun onError(message: String) {
-        scope.launch { dataSelector() }
+        scope.launch { getDBData() }
     }
 
-    private suspend fun dataSelector(){
+    private suspend fun getDBData(){
         scope.launch {
         if(model.getData() != null){
             view.onSuccess(model.getData())
