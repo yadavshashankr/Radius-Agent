@@ -3,7 +3,7 @@ MVP, Retrofit, RoomDB, Dagger-Hilt, Data Binding, Coroutines, Dark Mode.
 
 This project is an offline-first Android application. 
 
-- As soon as the app starts and data from api has not been refreshed in the past 24 hours then the app will retrieve data from network call else it will retrieve from local database. 
+- As soon as the app starts and if the data in local database has not been refreshed for the past 24 hours then the app will retrieve fresh data from network call else it will retrieve from local database. 
 
 - Coroutines, Data binding has been used profoundly. 
 
@@ -11,7 +11,7 @@ This project is an offline-first Android application.
 
 - App is also compatible for both Light and Dark modes.
 
-- Also a space & text sizing unit dependency called as sdp and ssp is used. This helps to have consistent UI accross all screen sizes including tablets.
+- Also a space & text sizing unit dependency called as sdp and ssp is used. This dependency helps to have consistent UI accross all screen sizes including tablets.
 
 
 E.g.
