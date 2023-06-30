@@ -3,6 +3,7 @@ package com.shashank.radiusAgent.presenter
 import com.shashank.radiusAgent.utils.launchOnMain
 import com.shashank.radiusAgent.network.model.FacilityModel
 import com.shashank.radiusAgent.contracts.MainActivityContract
+import com.shashank.radiusAgent.network.model.ExclusionModel
 import com.shashank.radiusAgent.network.model.MainModel
 import com.shashank.radiusAgent.utils.Prefs
 import kotlinx.coroutines.CoroutineScope
@@ -73,14 +74,18 @@ class MainPresenter(
         val facilitiesList = model.facilities
         val hashMap : HashMap<String, String> = HashMap()
 
+        return allotExcludedIdsToOptions(enableAllOptions(facilitiesList as ArrayList<FacilityModel>), exclusionList as ArrayList<ArrayList<ExclusionModel>>, hashMap)
+    }
+
+    private fun allotExcludedIdsToOptions(facilitiesList: ArrayList<FacilityModel>, exclusionList: ArrayList<ArrayList<ExclusionModel>>, hashMap : HashMap<String, String>):ArrayList<FacilityModel>{
         var i = 0
         var j = 0
 
-        while(i < facilitiesList?.size as Int){
+        while(i < facilitiesList.size){
             var value = ""
             var keyValue = ""
-            while (j < exclusionList?.get(i)?.size as Int){
-               val rejectedFacilityId = exclusionList[i][j].facility_id as String
+            while (j < exclusionList[i].size){
+                val rejectedFacilityId = exclusionList[i][j].facility_id as String
                 val rejectedOptionId = exclusionList[i][j].options_id as String
 
                 if(j == exclusionList[j].size - 1){
@@ -89,16 +94,6 @@ class MainPresenter(
                     keyValue = "$rejectedFacilityId-$rejectedOptionId"
                 }
                 hashMap[keyValue] = value
-                j++
-            }
-            j = 0
-            i++
-        }
-        i = 0
-        j = 0
-        while (i < facilitiesList.size){
-            while(j < facilitiesList[i].options?.size as Int){
-                facilitiesList[i].options?.get(j)?.isEnabled = true
                 j++
             }
             j = 0
@@ -117,7 +112,20 @@ class MainPresenter(
             j = 0
             i++
         }
+        return facilitiesList
+    }
 
+    private fun enableAllOptions(facilitiesList: ArrayList<FacilityModel>): ArrayList<FacilityModel>{
+        var i = 0
+        var j = 0
+        while (i < facilitiesList.size){
+            while(j < facilitiesList[i].options?.size as Int){
+                facilitiesList[i].options?.get(j)?.isEnabled = true
+                j++
+            }
+            j = 0
+            i++
+        }
         return facilitiesList
     }
 
