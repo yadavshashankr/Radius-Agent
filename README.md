@@ -20,10 +20,9 @@ App's first launch & Offline mode respectively
 
 
 
-https://github.com/yadavshashankr/Radius-Agent/assets/81215694/e8bc985d-5370-4468-824d-dfbb9ee4d751
+https://github.com/yadavshashankr/Radius-Agent/assets/81215694/93f6ddf6-b2f1-492d-8c45-49db6a14cb34
+
 
 
 
 https://github.com/yadavshashankr/Radius-Agent/assets/81215694/7880250a-2d8a-4a2f-92d9-48febecbef5e
-
-
