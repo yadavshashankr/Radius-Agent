@@ -17,7 +17,6 @@ interface MainActivityContract {
         fun onDestroy()
     }
 
-
     interface Model{
         interface OnFinishListener{
             fun onLoading()

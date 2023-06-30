@@ -14,18 +14,19 @@ import kotlinx.coroutines.launch
 class MainPresenter(
     private val view: MainActivityContract.View,
     private val model: MainActivityContract.Model
-) : MainActivityContract.Presenter , MainActivityContract.Model.OnFinishListener, MainActivityContract.OptionsProcessor{
+) : MainActivityContract.Presenter, MainActivityContract.Model.OnFinishListener,
+    MainActivityContract.OptionsProcessor {
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
     override fun getData() {
         scope.launch {
-            if (isMoreThan24Hours())model.getApiData(onFinishListener = this@MainPresenter) else getDBData()
+            if (isMoreThan24Hours()) model.getApiData(onFinishListener = this@MainPresenter) else getDBData()
         }
     }
 
-    private fun isMoreThan24Hours() : Boolean{
-        return Prefs.getLastRecordedTime() == 0L || System.currentTimeMillis() >= Prefs.getLastRecordedTime()  + 24 * 60 * 60 * 1000
+    private fun isMoreThan24Hours(): Boolean {
+        return Prefs.getLastRecordedTime() == 0L || System.currentTimeMillis() >= Prefs.getLastRecordedTime() + 24 * 60 * 60 * 1000
     }
 
     override fun onLoading() {
@@ -33,7 +34,7 @@ class MainPresenter(
     }
 
     override suspend fun onSuccess() {
-        scope.launch {view.onSuccess(model.getDBData() as MainModel)}
+        scope.launch { view.onSuccess(model.getDBData() as MainModel) }
     }
 
     override fun onError(message: String) {
@@ -44,26 +45,32 @@ class MainPresenter(
         scope.cancel()
     }
 
-    private suspend fun getDBData(){
+    private suspend fun getDBData() {
         scope.launch {
-        val dbData = model.getDBData()
-            if(dbData != null){
+            val dbData = model.getDBData()
+            if (dbData != null) {
                 view.onSuccess(dbData)
-            }else{
+            } else {
                 view.onError("Internet not available!")
             }
         }
     }
 
-    override fun disableSelectedOptionsState(facilitiesList: ArrayList<FacilityModel>, valueFacilityId : String, valueOptionsId : String): ArrayList<FacilityModel> {
+    override fun disableSelectedOptionsState(
+        facilitiesList: ArrayList<FacilityModel>,
+        valueFacilityId: String,
+        valueOptionsId: String
+    ): ArrayList<FacilityModel> {
         var i = 0
         var j = 0
 
-        while(i < facilitiesList.size){
-            while (j < facilitiesList[i].options?.size as Int){
+        while (i < facilitiesList.size) {
+            while (j < facilitiesList[i].options?.size as Int) {
                 facilitiesList[i].options?.get(j)?.isEnabled =
-                if (valueFacilityId == "" || valueOptionsId == "") true
-                else valueFacilityId != facilitiesList[i].facility_id as String || valueOptionsId != facilitiesList[i].options?.get(j)?.id as String
+                    if (valueFacilityId == "" || valueOptionsId == "") true
+                    else valueFacilityId != facilitiesList[i].facility_id as String || valueOptionsId != facilitiesList[i].options?.get(
+                        j
+                    )?.id as String
 
                 j++
             }
@@ -76,25 +83,33 @@ class MainPresenter(
     override fun processOptions(model: MainModel): ArrayList<FacilityModel> {
         val exclusionList = model.exclusions
         val facilitiesList = model.facilities
-        val hashMap : HashMap<String, String> = HashMap()
+        val hashMap: HashMap<String, String> = HashMap()
 
-        return allotExcludedIdsToOptions(enableAllOptions(facilitiesList as ArrayList<FacilityModel>), exclusionList as ArrayList<ArrayList<ExclusionModel>>, hashMap)
+        return allotExcludedIdsToOptions(
+            enableAllOptions(facilitiesList as ArrayList<FacilityModel>),
+            exclusionList as ArrayList<ArrayList<ExclusionModel>>,
+            hashMap
+        )
     }
 
-    private fun allotExcludedIdsToOptions(facilitiesList: ArrayList<FacilityModel>, exclusionList: ArrayList<ArrayList<ExclusionModel>>, hashMap : HashMap<String, String>):ArrayList<FacilityModel>{
+    private fun allotExcludedIdsToOptions(
+        facilitiesList: ArrayList<FacilityModel>,
+        exclusionList: ArrayList<ArrayList<ExclusionModel>>,
+        hashMap: HashMap<String, String>
+    ): ArrayList<FacilityModel> {
         var i = 0
         var j = 0
 
-        while(i < facilitiesList.size){
+        while (i < facilitiesList.size) {
             var value = ""
             var keyValue = ""
-            while (j < exclusionList[i].size){
+            while (j < exclusionList[i].size) {
                 val rejectedFacilityId = exclusionList[i][j].facility_id as String
                 val rejectedOptionId = exclusionList[i][j].options_id as String
 
-                if(j == exclusionList[j].size - 1){
+                if (j == exclusionList[j].size - 1) {
                     value += "$rejectedFacilityId-$rejectedOptionId"
-                }else{
+                } else {
                     keyValue = "$rejectedFacilityId-$rejectedOptionId"
                 }
                 hashMap[keyValue] = value
@@ -107,10 +122,12 @@ class MainPresenter(
         i = 0
         j = 0
 
-        while (i < facilitiesList.size){
-            while (j < facilitiesList[i].options?.size as Int){
-                val value = "${facilitiesList[i].facility_id}-${facilitiesList[i].options?.get(j)?.id}"
-                facilitiesList[i].options?.get(j)?.selectedFacility = hashMap.getOrDefault(value, "")
+        while (i < facilitiesList.size) {
+            while (j < facilitiesList[i].options?.size as Int) {
+                val value =
+                    "${facilitiesList[i].facility_id}-${facilitiesList[i].options?.get(j)?.id}"
+                facilitiesList[i].options?.get(j)?.selectedFacility =
+                    hashMap.getOrDefault(value, "")
                 j++
             }
             j = 0
@@ -119,11 +136,11 @@ class MainPresenter(
         return facilitiesList
     }
 
-    private fun enableAllOptions(facilitiesList: ArrayList<FacilityModel>): ArrayList<FacilityModel>{
+    private fun enableAllOptions(facilitiesList: ArrayList<FacilityModel>): ArrayList<FacilityModel> {
         var i = 0
         var j = 0
-        while (i < facilitiesList.size){
-            while(j < facilitiesList[i].options?.size as Int){
+        while (i < facilitiesList.size) {
+            while (j < facilitiesList[i].options?.size as Int) {
                 facilitiesList[i].options?.get(j)?.isEnabled = true
                 j++
             }

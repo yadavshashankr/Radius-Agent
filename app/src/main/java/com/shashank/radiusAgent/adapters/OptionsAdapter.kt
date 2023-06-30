@@ -46,6 +46,7 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
 
         binding.tvOption.setOnClickListener{
             Constants.selected_name = binding.tvOption.text.toString()
+
             val values = item.selectedFacility?.split("-")
             try {
                 val valueFacilityID = values?.get(0)
@@ -56,7 +57,6 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
                 selectedOptionsContract.disableSelectedOptionsState("", "", position)
             }
         }
-
     }
 
     override fun getItemCount(): Int {
