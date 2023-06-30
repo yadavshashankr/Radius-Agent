@@ -3,6 +3,12 @@ package com.shashank.radiusAgent.globals
 class Constants {
 
 companion object{
+
+
+    const val HOST_URL = "https://my-json-server.typicode.com/"
+    const val TABLE_NAME_PROPERTY = "propertymodel"
+    var selected_name = ""
+
     object Icons{
         const val APARTMENT = "apartment"
         const val CONDO = "condo"
@@ -17,9 +23,6 @@ companion object{
         const val GARDEN = "garden"
         const val GARAGE = "garage"
     }
-    var selected_name = ""
-    const val TABLE_NAME_PROPERTY = "propertymodel"
-    const val HOST_URL = "https://my-json-server.typicode.com/"
 }
 
 }

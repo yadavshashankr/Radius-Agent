@@ -14,9 +14,10 @@ import com.shashank.radiusAgent.network.api.ApiService
 import com.shashank.radiusAgent.network.model.MainModel
 import com.shashank.radiusAgent.presenter.MainPresenter
 import com.shashank.radiusAgent.repositories.NetworkRepository
+import com.shashank.radiusAgent.utils.launchOnMain
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -32,6 +33,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
     private var _binding : ActivityMainBinding? = null
     private val binding : ActivityMainBinding
     get() = _binding as ActivityMainBinding
+
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     private val mainAdapter = MainAdapter()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,13 +55,12 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
         binding.rvMVP.adapter = mainAdapter
     }
 
-
     override fun onLoading() {
         binding.progress.visibility= View.VISIBLE
     }
 
     override suspend fun onSuccess(model: MainModel) {
-        withContext(Dispatchers.Main) {
+        scope.launchOnMain {
             binding.progress.visibility= View.GONE
             facilitiesList = presenter.processOptions(model)
             mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity)
