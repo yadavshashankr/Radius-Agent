@@ -31,6 +31,15 @@ class MainPresenter(
         return lastRecordedTime == 0L || System.currentTimeMillis() >= lastRecordedTime + 24 * 60 * 60 * 1000
     }
 
+    private suspend fun getDBData() {
+        val dbData = model.getDBData()
+        if (dbData != null) {
+            view.onSuccess(dbData)
+        } else {
+            view.onError("Internet not available!")
+        }
+    }
+
     override fun onLoading() {
         scope.launchOnMain { view.onLoading() }
     }
@@ -46,15 +55,6 @@ class MainPresenter(
 
     override fun onDestroy() {
         scope.cancel()
-    }
-
-    private suspend fun getDBData() {
-        val dbData = model.getDBData()
-        if (dbData != null) {
-            view.onSuccess(dbData)
-        } else {
-            view.onError("Internet not available!")
-        }
     }
 
     override fun disableSelectedOptionsState(
