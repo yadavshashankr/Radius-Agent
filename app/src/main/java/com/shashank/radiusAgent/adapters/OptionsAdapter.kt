@@ -16,25 +16,25 @@ import com.shashank.radiusAgent.utils.OptionUtils
 class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
 
     private var list = ArrayList<OptionsModel>()
-    private lateinit var selectedOptionsContract: SelectedOptionsContract
+    private lateinit var selectedOptionsContract : SelectedOptionsContract
     private lateinit var context : Context
 
-    fun addItems(context: Context, arrayListOptionsModel : ArrayList<OptionsModel>, selectedOptionsContract: SelectedOptionsContract){
+    fun addItems(context: Context, arrayListOptionsModel : ArrayList<OptionsModel>, selectedOptionsContract : SelectedOptionsContract){
         this.context = context
         this.selectedOptionsContract = selectedOptionsContract
         this.list = arrayListOptionsModel
         notifyDataSetChanged()
     }
 
-    inner class MyViewHolder(val viewDataBinding: ViewHolderOptionsBinding) :
+    inner class MyViewHolder(val viewDataBinding : ViewHolderOptionsBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+    override fun onCreateViewHolder(parent : ViewGroup, viewType : Int): MyViewHolder {
         val binding = ViewHolderOptionsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
         return MyViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder : MyViewHolder, position : Int) {
         holder.setIsRecyclable(false)
         val binding = holder.viewDataBinding
         val item = this.list[position]

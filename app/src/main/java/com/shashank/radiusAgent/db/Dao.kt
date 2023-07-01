@@ -11,10 +11,10 @@ import com.shashank.radiusAgent.network.model.MainModel
 @Dao
 interface Dao {
     @Query("SELECT * FROM ${Constants.TABLE_NAME_PROPERTY}")
-    fun getAllProperties(): MainModel
+    fun getAllProperties() : MainModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertRecords(model: MainModel)
+    fun insertRecords(model : MainModel)
 
     @Query("DELETE FROM ${Constants.TABLE_NAME_PROPERTY}" )
     fun deleteAllRecords()

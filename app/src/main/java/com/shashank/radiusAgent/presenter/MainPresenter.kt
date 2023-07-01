@@ -1,5 +1,6 @@
 package com.shashank.radiusAgent.presenter
 
+import android.util.Log
 import com.shashank.radiusAgent.utils.launchOnMain
 import com.shashank.radiusAgent.network.model.FacilityModel
 import com.shashank.radiusAgent.contracts.MainActivityContract
@@ -12,8 +13,8 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class MainPresenter(
-    private val view: MainActivityContract.View,
-    private val model: MainActivityContract.Model
+    private val view : MainActivityContract.View,
+    private val model : MainActivityContract.Model
 ) : MainActivityContract.Presenter, MainActivityContract.Model.OnFinishListener,
     MainActivityContract.OptionsProcessor {
 
@@ -25,8 +26,9 @@ class MainPresenter(
         }
     }
 
-    private fun isMoreThan24Hours(): Boolean {
-        return Prefs.getLastRecordedTime() == 0L || System.currentTimeMillis() >= Prefs.getLastRecordedTime() + 24 * 60 * 60 * 1000
+    private fun isMoreThan24Hours() : Boolean {
+        val lastRecordedTime = Prefs.getLastRecordedTime()
+        return lastRecordedTime == 0L || System.currentTimeMillis() >= lastRecordedTime + 24 * 60 * 60 * 1000
     }
 
     override fun onLoading() {
@@ -37,7 +39,8 @@ class MainPresenter(
         scope.launch { view.onSuccess(model.getDBData() as MainModel) }
     }
 
-    override fun onError(message: String) {
+    override fun onError(message : String) {
+        Log.e("ERR", message)
         scope.launch { getDBData() }
     }
 
@@ -57,10 +60,10 @@ class MainPresenter(
     }
 
     override fun disableSelectedOptionsState(
-        facilitiesList: ArrayList<FacilityModel>,
-        valueFacilityId: String,
-        valueOptionsId: String
-    ): ArrayList<FacilityModel> {
+        facilitiesList : ArrayList<FacilityModel>,
+        valueFacilityId : String,
+        valueOptionsId : String
+    ) : ArrayList<FacilityModel> {
         var i = 0
         var j = 0
 
@@ -80,7 +83,7 @@ class MainPresenter(
         return facilitiesList
     }
 
-    override fun processOptions(model: MainModel): ArrayList<FacilityModel> {
+    override fun processOptions(model : MainModel) : ArrayList<FacilityModel> {
         val exclusionList = model.exclusions
         val facilitiesList = model.facilities
         val hashMap: HashMap<String, String> = HashMap()
@@ -93,10 +96,10 @@ class MainPresenter(
     }
 
     private fun allotExcludedIdsToOptions(
-        facilitiesList: ArrayList<FacilityModel>,
-        exclusionList: ArrayList<ArrayList<ExclusionModel>>,
-        hashMap: HashMap<String, String>
-    ): ArrayList<FacilityModel> {
+        facilitiesList : ArrayList<FacilityModel>,
+        exclusionList : ArrayList<ArrayList<ExclusionModel>>,
+        hashMap : HashMap<String, String>
+    ) : ArrayList<FacilityModel> {
         var i = 0
         var j = 0
 
@@ -136,7 +139,7 @@ class MainPresenter(
         return facilitiesList
     }
 
-    private fun enableAllOptions(facilitiesList: ArrayList<FacilityModel>): ArrayList<FacilityModel> {
+    private fun enableAllOptions(facilitiesList : ArrayList<FacilityModel>) : ArrayList<FacilityModel> {
         var i = 0
         var j = 0
         while (i < facilitiesList.size) {

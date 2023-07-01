@@ -7,6 +7,6 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("iranjith4/ad-assignment/db")
-    suspend fun getCategory():Response<MainModel>
+    suspend fun getCategory() :Response<MainModel>
 
 }

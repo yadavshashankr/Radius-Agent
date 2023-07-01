@@ -9,7 +9,8 @@ data class ExclusionModel(var facility_id : String? = null, var options_id : Str
     class TypeConverterData {
         private val gson : Gson = Gson()
         @TypeConverter
-        fun stringToSomeObjectList(data: String?) : ExclusionModel? {
+        fun stringToSomeObjectList(data : String?) : ExclusionModel?
+        {
             if(data == null)return null
 
             val listType: Type = object : TypeToken<ExclusionModel>() {}.type
@@ -17,7 +18,7 @@ data class ExclusionModel(var facility_id : String? = null, var options_id : Str
         }
 
         @TypeConverter
-        fun someObjectListToString(someObject: ExclusionModel?): String?
+        fun someObjectListToString(someObject : ExclusionModel?) : String?
         {
             return gson.toJson(someObject)
         }

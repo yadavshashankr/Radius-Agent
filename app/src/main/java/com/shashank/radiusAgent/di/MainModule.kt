@@ -19,26 +19,26 @@ import javax.inject.Singleton
 object MainModule {
 
     @Provides
-    fun provideApiService(): ApiService {
+    fun provideApiService() : ApiService {
         return Retrofit.Builder().baseUrl(Constants.HOST_URL)
             .addConverterFactory(GsonConverterFactory.create()).build().create(ApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun providesAppDataBase(context: Application): AppDatabase {
+    fun providesAppDataBase(context : Application): AppDatabase {
         return AppDatabase.getAppDBInstance(context)
     }
 
     @Provides
     @Singleton
-    fun providesDao(appDatabase: AppDatabase): Dao {
+    fun providesDao(appDatabase : AppDatabase): Dao {
         return appDatabase.getDao()
     }
 
     @Provides
     @Singleton
-    fun providesMainModel(apiService: ApiService, dao: Dao): NetworkRepository {
+    fun providesMainModel(apiService : ApiService, dao: Dao): NetworkRepository {
         return NetworkRepository(apiService, dao)
     }
 }

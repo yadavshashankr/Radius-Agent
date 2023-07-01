@@ -13,7 +13,7 @@ import com.shashank.radiusAgent.globals.Constants
 
 class OptionUtils {
      companion object {
-         fun processImageDrawable(context: Context, icon: String?, isEnabled : Boolean): Drawable? {
+         fun processImageDrawable(context : Context, icon : String?, isEnabled : Boolean) : Drawable? {
              when(icon){
                  Constants.Companion.Icons.APARTMENT -> return processIconState(context, R.drawable.apartment, isEnabled)
                  Constants.Companion.Icons.CONDO -> return processIconState(context, R.drawable.condo, isEnabled)
@@ -27,7 +27,7 @@ class OptionUtils {
              }
              return null
          }
-         private fun processIconState(context: Context, icon: Int, isEnabled : Boolean): Drawable? {
+         private fun processIconState(context : Context, icon: Int, isEnabled : Boolean): Drawable? {
              val mIcon = ContextCompat.getDrawable(context, icon)
              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                  mIcon?.colorFilter = BlendModeColorFilter( if(isEnabled) ContextCompat.getColor(context, R.color.blue_cff) else ContextCompat.getColor(context, R.color.gray_808), BlendMode.SRC_ATOP)

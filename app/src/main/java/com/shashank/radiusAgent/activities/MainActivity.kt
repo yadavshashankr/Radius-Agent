@@ -50,12 +50,12 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
     }
 
     override fun onLoading() {
-        binding.progress.visibility= View.VISIBLE
+        binding.progress.visibility = View.VISIBLE
     }
 
-    override  fun onSuccess(model: MainModel) {
+    override fun onSuccess(model : MainModel) {
         runOnUiThread {
-            binding.progress.visibility= View.GONE
+            binding.progress.visibility = View.GONE
             facilitiesList = presenter.processOptions(model)
             mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity, 0)
         }
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
 
     override fun onError(message: String) {
         runOnUiThread {
-            binding.progress.visibility= View.GONE
+            binding.progress.visibility = View.GONE
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
         super.onDestroy()
     }
 
-    override fun disableSelectedOptionsState(valueFacilityID: String, valueOptionsID: String, selectedPosition : Int) {
+    override fun disableSelectedOptionsState(valueFacilityID : String, valueOptionsID : String, selectedPosition : Int) {
         val facilitiesList = presenter.disableSelectedOptionsState(facilitiesList, valueFacilityID, valueOptionsID)
         mainAdapter.addItems(this, facilitiesList, this, selectedPosition)
     }

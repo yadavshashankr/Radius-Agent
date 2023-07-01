@@ -13,13 +13,13 @@ data class MainModel(@PrimaryKey(autoGenerate = true)@ColumnInfo(name = "id")val
                      @ColumnInfo(name = "facilities")var facilities : ArrayList<FacilityModel>?, @ColumnInfo(name = "exclusions")var exclusions : ArrayList<ArrayList<ExclusionModel>>?){
     object ConvertersFacilities {
         @TypeConverter
-        fun fromString(value: String?): ArrayList<String> {
+        fun fromString(value: String?) : ArrayList<String> {
             val listType = object : TypeToken<ArrayList<FacilityModel?>?>() {}.type
             return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
-        fun fromArrayList(list: ArrayList<String?>?): String {
+        fun fromArrayList(list : ArrayList<String?>?): String {
             val gson = Gson()
             return gson.toJson(list)
         }
@@ -27,13 +27,13 @@ data class MainModel(@PrimaryKey(autoGenerate = true)@ColumnInfo(name = "id")val
 
     object ConvertersExclusions {
         @TypeConverter
-        fun fromString(value: String?): ArrayList<ArrayList<ExclusionModel>> {
+        fun fromString(value: String?) : ArrayList<ArrayList<ExclusionModel>> {
             val listType = object : TypeToken<ArrayList<ArrayList<ExclusionModel>?>?>() {}.type
             return Gson().fromJson(value, listType)
         }
 
         @TypeConverter
-        fun fromArrayList(list: ArrayList<ArrayList<ExclusionModel>?>?): String {
+        fun fromArrayList(list : ArrayList<ArrayList<ExclusionModel>?>?) : String {
             val gson = Gson()
             return gson.toJson(list)
         }
