@@ -46,7 +46,7 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
         binding.rvOptions.adapter = optionsAdapter
 
         optionsAdapter.addItems(context, item.options as ArrayList<OptionsModel>, selectedOptionsContract)
-        binding.rvOptions.smoothScrollToPosition(selectedPosition)
+        binding.rvOptions.scrollToPosition(selectedPosition)
     }
 
     override fun getItemCount(): Int {
