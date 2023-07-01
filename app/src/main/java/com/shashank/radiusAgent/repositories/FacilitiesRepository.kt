@@ -8,7 +8,7 @@ import com.shashank.radiusAgent.utils.Prefs
 import java.lang.Exception
 import javax.inject.Inject
 
-class NetworkRepository @Inject constructor(private val apiService : ApiService, private  val dao : Dao) : MainActivityContract.Model {
+class FacilitiesRepository @Inject constructor(private val apiService : ApiService, private  val dao : Dao) : MainActivityContract.Model {
 
     override suspend fun getApiData(onFinishListener : MainActivityContract.Model.OnFinishListener) {
         onFinishListener.onLoading()
@@ -31,6 +31,6 @@ class NetworkRepository @Inject constructor(private val apiService : ApiService,
 
     }
     override suspend fun getDBData() : MainModel {
-        return dao.getAllProperties()
+        return dao.getAllFacilities()
     }
 }

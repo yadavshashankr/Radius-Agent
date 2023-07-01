@@ -13,7 +13,7 @@ import com.shashank.radiusAgent.db.Dao
 import com.shashank.radiusAgent.network.api.ApiService
 import com.shashank.radiusAgent.network.model.MainModel
 import com.shashank.radiusAgent.presenter.MainPresenter
-import com.shashank.radiusAgent.repositories.NetworkRepository
+import com.shashank.radiusAgent.repositories.FacilitiesRepository
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this, NetworkRepository(apiService, dao))
+        presenter = MainPresenter(this, FacilitiesRepository(apiService, dao))
 
         initView()
 

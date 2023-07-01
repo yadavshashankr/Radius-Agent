@@ -11,7 +11,7 @@ import com.shashank.radiusAgent.network.model.MainModel
 @Dao
 interface Dao {
     @Query("SELECT * FROM ${Constants.TABLE_NAME_PROPERTY}")
-    fun getAllProperties() : MainModel
+    fun getAllFacilities() : MainModel
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertRecords(model : MainModel)

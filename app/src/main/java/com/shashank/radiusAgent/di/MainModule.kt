@@ -5,7 +5,7 @@ import com.shashank.radiusAgent.db.AppDatabase
 import com.shashank.radiusAgent.db.Dao
 import com.shashank.radiusAgent.globals.Constants
 import com.shashank.radiusAgent.network.api.ApiService
-import com.shashank.radiusAgent.repositories.NetworkRepository
+import com.shashank.radiusAgent.repositories.FacilitiesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +38,7 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun providesMainModel(apiService : ApiService, dao: Dao): NetworkRepository {
-        return NetworkRepository(apiService, dao)
+    fun providesMainModel(apiService : ApiService, dao: Dao): FacilitiesRepository {
+        return FacilitiesRepository(apiService, dao)
     }
 }

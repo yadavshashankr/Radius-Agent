@@ -62,21 +62,23 @@ class MainPresenter(
         valueFacilityId : String,
         valueOptionsId : String
     ) : ArrayList<FacilityModel> {
-        var i = 0
-        var j = 0
+        var facilityPosition = 0
+        var optionPosition = 0
 
-        while (i < facilitiesList.size) {
-            while (j < facilitiesList[i].options?.size as Int) {
-                facilitiesList[i].options?.get(j)?.isEnabled =
-                    if (valueFacilityId == "" || valueOptionsId == "") true
-                    else valueFacilityId != facilitiesList[i].facility_id as String || valueOptionsId != facilitiesList[i].options?.get(
-                        j
-                    )?.id as String
+        //If mapped facility id and option id is found then disable it or enable the ones whose id is not found.
 
-                j++
+        while (facilityPosition < facilitiesList.size) {
+            while (optionPosition < facilitiesList[facilityPosition].options?.size as Int) {
+                facilitiesList[facilityPosition].options?.get(optionPosition)?.isEnabled =
+                    if (valueFacilityId == "" || valueOptionsId == "")
+                        true
+                    else
+                        valueFacilityId != facilitiesList[facilityPosition].facility_id as String || valueOptionsId != facilitiesList[facilityPosition].options?.get(optionPosition)?.id as String
+
+                optionPosition++
             }
-            j = 0
-            i++
+            optionPosition = 0
+            facilityPosition++
         }
         return facilitiesList
     }
@@ -84,69 +86,58 @@ class MainPresenter(
     override fun processOptions(model : MainModel) : ArrayList<FacilityModel> {
         val exclusionList = model.exclusions
         val facilitiesList = model.facilities
-        val hashMap: HashMap<String, String> = HashMap()
 
-        return allotExcludedIdsToOptions(
-            enableAllOptions(facilitiesList as ArrayList<FacilityModel>),
-            exclusionList as ArrayList<ArrayList<ExclusionModel>>,
-            hashMap
+        return allotExcludedIdsToOptions(facilitiesList as ArrayList<FacilityModel>, exclusionList as ArrayList<ArrayList<ExclusionModel>>
         )
     }
 
     private fun allotExcludedIdsToOptions(
         facilitiesList : ArrayList<FacilityModel>,
-        exclusionList : ArrayList<ArrayList<ExclusionModel>>,
-        hashMap : HashMap<String, String>
+        exclusionList : ArrayList<ArrayList<ExclusionModel>>
     ) : ArrayList<FacilityModel> {
-        var i = 0
-        var j = 0
+        var facilityPosition = 0
+        var optionPosition = 0
+        val hashMap: HashMap<String, String> = HashMap()
 
-        while (i < facilitiesList.size) {
+        //Map excluded facility ids and option ids to options list inside facilities list. Also enable all options.
+
+        while (facilityPosition < facilitiesList.size) {
             var value = ""
             var keyValue = ""
-            while (j < exclusionList[i].size) {
-                val rejectedFacilityId = exclusionList[i][j].facility_id as String
-                val rejectedOptionId = exclusionList[i][j].options_id as String
 
-                if (j == exclusionList[j].size - 1) {
+            while (optionPosition < exclusionList[facilityPosition].size) {
+                val rejectedFacilityId = exclusionList[facilityPosition][optionPosition].facility_id as String
+                val rejectedOptionId = exclusionList[facilityPosition][optionPosition].options_id as String
+
+                if (optionPosition == exclusionList[optionPosition].size - 1) {
                     value += "$rejectedFacilityId-$rejectedOptionId"
                 } else {
                     keyValue = "$rejectedFacilityId-$rejectedOptionId"
                 }
                 hashMap[keyValue] = value
-                j++
+                optionPosition++
             }
-            j = 0
-            i++
+
+            optionPosition = 0
+            facilityPosition++
         }
 
-        i = 0
-        j = 0
+        facilityPosition = 0
+        optionPosition = 0
 
-        while (i < facilitiesList.size) {
-            while (j < facilitiesList[i].options?.size as Int) {
-                val value =
-                    "${facilitiesList[i].facility_id}-${facilitiesList[i].options?.get(j)?.id}"
-                facilitiesList[i].options?.get(j)?.selectedFacility =
-                    hashMap.getOrDefault(value, "")
-                j++
-            }
-            j = 0
-            i++
-        }
-        return facilitiesList
-    }
+        while (facilityPosition < facilitiesList.size) {
 
-    private fun enableAllOptions(facilitiesList : ArrayList<FacilityModel>) : ArrayList<FacilityModel> {
-        var i = 0
-        var j = 0
-        while (i < facilitiesList.size) {
-            while (j < facilitiesList[i].options?.size as Int) {
-                facilitiesList[i].options?.get(j)?.isEnabled = true
-                j++
+            while (optionPosition < facilitiesList[facilityPosition].options?.size as Int) {
+
+                val value = "${facilitiesList[facilityPosition].facility_id}-${facilitiesList[facilityPosition].options?.get(optionPosition)?.id}"
+                facilitiesList[facilityPosition].options?.get(optionPosition)?.selectedFacility = hashMap.getOrDefault(value, "")
+                facilitiesList[facilityPosition].options?.get(optionPosition)?.isEnabled = true
+                optionPosition++
+
             }
-            j = 0
-            i++
+
+            optionPosition = 0
+            facilityPosition++
         }
         return facilitiesList
     }
