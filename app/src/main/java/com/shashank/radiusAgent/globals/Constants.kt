@@ -4,7 +4,7 @@ class Constants {
     companion object{
         const val HOST_URL = "https://my-json-server.typicode.com/"
         const val TABLE_NAME_PROPERTY = "propertymodel"
-        var selected_name = ""
+        var SELECTED_NAME = ""
 
         object Icons{
             const val APARTMENT = "apartment"

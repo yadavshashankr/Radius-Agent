@@ -42,10 +42,10 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
 
         binding.ivOption.setImageDrawable(OptionUtils.processImageDrawable(context, item.icon, item.isEnabled))
 
-        binding.isSelected = item.name.equals(Constants.selected_name)
+        binding.isSelected = item.name.equals(Constants.SELECTED_NAME)
 
         binding.tvOption.setOnClickListener{
-            Constants.selected_name = binding.tvOption.text.toString()
+            Constants.SELECTED_NAME = binding.tvOption.text.toString()
 
             val values = item.selectedFacility?.split("-")
             try {

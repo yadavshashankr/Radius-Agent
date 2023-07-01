@@ -49,13 +49,11 @@ class MainPresenter(
     }
 
     private suspend fun getDBData() {
-        scope.launch {
-            val dbData = model.getDBData()
-            if (dbData != null) {
-                view.onSuccess(dbData)
-            } else {
-                view.onError("Internet not available!")
-            }
+        val dbData = model.getDBData()
+        if (dbData != null) {
+            view.onSuccess(dbData)
+        } else {
+            view.onError("Internet not available!")
         }
     }
 

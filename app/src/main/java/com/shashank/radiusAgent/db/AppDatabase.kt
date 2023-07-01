@@ -29,7 +29,7 @@ abstract class AppDatabase: RoomDatabase() {
 
         fun getAppDBInstance(context: Context): AppDatabase {
             if(dbInstance == null) {
-                dbInstance =  Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "APP_DB")
+                dbInstance = Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "APP_DB")
                     .fallbackToDestructiveMigration()
                     .allowMainThreadQueries()
                     .build()

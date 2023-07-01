@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _binding= ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         presenter = MainPresenter(this, NetworkRepository(apiService, dao))
@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
 
     override fun disableSelectedOptionsState(valueFacilityID : String, valueOptionsID : String, selectedPosition : Int) {
         val facilitiesList = presenter.disableSelectedOptionsState(facilitiesList, valueFacilityID, valueOptionsID)
-        mainAdapter.addItems(this, facilitiesList, this, selectedPosition)
+        val finalPosition = if(selectedPosition == 1) 0 else if (selectedPosition == 2) 3 else selectedPosition
+        mainAdapter.addItems(this, facilitiesList, this, finalPosition)
     }
 }
