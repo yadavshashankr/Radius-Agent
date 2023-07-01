@@ -33,24 +33,24 @@ class MainPresenter(
 
     private suspend fun getDBData() {
         val dbData = model.getDBData()
-        if (dbData != null) {
+        scope.launchOnMain {
             view.onSuccess(dbData)
-        } else {
-            view.onError("Internet not available!")
+            view.onError(if (dbData == null)"Internet not available!" else return@launchOnMain)
         }
     }
 
     override fun onLoading() {
-        scope.launchOnMain { view.onLoading() }
+        view.onLoading()
     }
 
     override suspend fun onSuccess() {
-        scope.launch { view.onSuccess(model.getDBData() as MainModel) }
+        val dbData = model.getDBData()
+        scope.launchOnMain { view.onSuccess(dbData as MainModel) }
     }
 
-    override fun onError(message : String) {
+    override suspend fun onError(message : String) {
         Log.e("ERR", message)
-        scope.launch { getDBData() }
+        getDBData()
     }
 
     override fun onDestroy() {

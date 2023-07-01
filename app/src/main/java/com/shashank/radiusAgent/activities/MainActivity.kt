@@ -53,19 +53,16 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
         binding.progress.visibility = View.VISIBLE
     }
 
-    override fun onSuccess(model : MainModel) {
-        runOnUiThread {
-            binding.progress.visibility = View.GONE
-            facilitiesList = presenter.processOptions(model)
-            mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity, 0)
-        }
+    override fun onSuccess(model : MainModel?) {
+        if (model == null)return
+        binding.progress.visibility = View.GONE
+        facilitiesList = presenter.processOptions(model)
+        mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity, 0)
     }
 
-    override fun onError(message : String) {
-        runOnUiThread {
-            binding.progress.visibility = View.GONE
-            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
-        }
+    override fun onError(message : String?) {
+        binding.progress.visibility = View.GONE
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {

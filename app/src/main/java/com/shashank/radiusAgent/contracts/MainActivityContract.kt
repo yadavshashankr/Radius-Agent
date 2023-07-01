@@ -8,8 +8,8 @@ interface MainActivityContract {
 
     interface View{
         fun onLoading()
-        fun onSuccess(model : MainModel)
-        fun onError(message :String)
+        fun onSuccess(model : MainModel?)
+        fun onError(message :String?)
     }
 
     interface Presenter{
@@ -20,7 +20,7 @@ interface MainActivityContract {
     interface Model{
         interface OnFinishListener{
             fun onLoading()
-            fun onError(message:String)
+            suspend fun onError(message:String)
             suspend fun onSuccess()
         }
         suspend fun getApiData(onFinishListener : OnFinishListener)
