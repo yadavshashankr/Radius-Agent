@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
         }
     }
 
-    override fun onError(message: String) {
+    override fun onError(message : String) {
         runOnUiThread {
             binding.progress.visibility = View.GONE
             Toast.makeText(this, message, Toast.LENGTH_LONG).show()
