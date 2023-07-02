@@ -28,8 +28,8 @@ class FacilitiesRepository @Inject constructor(private val apiService : ApiServi
         }catch (e : Exception){
             onFinishListener.onError(message = e.message.toString())
         }
-
     }
+
     override suspend fun getDBData() : MainModel {
         return dao.getAllFacilities()
     }

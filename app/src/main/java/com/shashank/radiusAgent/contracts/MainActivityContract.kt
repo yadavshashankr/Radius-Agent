@@ -1,6 +1,7 @@
 package com.shashank.radiusAgent.contracts
 
 
+import androidx.lifecycle.LiveData
 import com.shashank.radiusAgent.network.model.FacilityModel
 import com.shashank.radiusAgent.network.model.MainModel
 
@@ -8,12 +9,12 @@ interface MainActivityContract {
 
     interface View{
         fun onLoading()
-        fun onSuccess(model : MainModel?)
+        fun onSuccess()
         fun onError(message :String?)
     }
 
     interface Presenter{
-        fun getData()
+        fun getData() : LiveData<MainModel?>
         fun onDestroy()
     }
 
@@ -30,7 +31,6 @@ interface MainActivityContract {
     interface OptionsProcessor{
         fun disableSelectedOptionsState(facilitiesList : ArrayList<FacilityModel>, valueFacilityId : String, valueOptionsId : String) : ArrayList<FacilityModel>
         fun processOptions(model : MainModel): ArrayList<FacilityModel>
-
-        fun getFinalPosition(selectedPosition : Int) : Int
+        fun getFinalScrollPosition(selectedPosition : Int) : Int
     }
 }

@@ -11,7 +11,6 @@ import com.shashank.radiusAgent.contracts.MainActivityContract
 import com.shashank.radiusAgent.databinding.ActivityMainBinding
 import com.shashank.radiusAgent.db.Dao
 import com.shashank.radiusAgent.network.api.ApiService
-import com.shashank.radiusAgent.network.model.MainModel
 import com.shashank.radiusAgent.presenter.MainPresenter
 import com.shashank.radiusAgent.repositories.FacilitiesRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,28 +40,33 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
 
         initView()
 
-        presenter.getData()
-
+        setupObservers()
     }
 
     private fun initView() {
         binding.rvMVP.adapter = mainAdapter
     }
 
+    private fun setupObservers() {
+        presenter.getData().observe(this){
+            if(it != null){
+                facilitiesList = presenter.processOptions(it)
+                mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity, 0)
+            }
+        }
+    }
+
     override fun onLoading() {
         binding.progress.visibility = View.VISIBLE
     }
 
-    override fun onSuccess(model : MainModel?) {
+    override fun onSuccess() {
         binding.progress.visibility = View.GONE
-        if (model == null)return
-        facilitiesList = presenter.processOptions(model)
-        mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity, 0)
     }
 
     override fun onError(message : String?) {
         binding.progress.visibility = View.GONE
-        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+        if(message != null)Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     override fun onDestroy() {
@@ -72,7 +76,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
 
     override fun disableSelectedOptionsState(valueFacilityID : String, valueOptionsID : String, selectedPosition : Int) {
         val facilitiesList = presenter.disableSelectedOptionsState(facilitiesList, valueFacilityID, valueOptionsID)
-        val finalPosition = presenter.getFinalPosition(selectedPosition)
+        val finalPosition = presenter.getFinalScrollPosition(selectedPosition)
         mainAdapter.addItems(this, facilitiesList, this, finalPosition)
     }
 }

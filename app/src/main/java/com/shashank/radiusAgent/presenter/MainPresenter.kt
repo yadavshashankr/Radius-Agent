@@ -1,6 +1,8 @@
 package com.shashank.radiusAgent.presenter
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.shashank.radiusAgent.utils.launchOnMain
 import com.shashank.radiusAgent.network.model.FacilityModel
 import com.shashank.radiusAgent.contracts.MainActivityContract
@@ -20,10 +22,12 @@ class MainPresenter(
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    override fun getData() {
-        scope.launch {
-            if (isMoreThan24Hours()) model.getApiData(onFinishListener = this@MainPresenter) else getDBData()
-        }
+    private var mutableMainModelLiveData : MutableLiveData<MainModel?> = MutableLiveData()
+    private var mainModelLiveData : LiveData<MainModel?> = mutableMainModelLiveData
+
+    override fun getData() : LiveData<MainModel?> {
+        scope.launch { if (isMoreThan24Hours()){ model.getApiData(onFinishListener = this@MainPresenter) } else{ getDBData() } }
+        return mainModelLiveData
     }
 
     private fun isMoreThan24Hours() : Boolean {
@@ -33,10 +37,8 @@ class MainPresenter(
 
     private suspend fun getDBData() {
         val dbData = model.getDBData()
-        scope.launchOnMain {
-            view.onSuccess(dbData)
-            view.onError(if (dbData == null)"Internet not available!" else return@launchOnMain)
-        }
+        mutableMainModelLiveData.postValue(dbData)
+        scope.launchOnMain { view.onError(if (dbData == null)"Internet not available!" else null) }
     }
 
     override fun onLoading() {
@@ -44,12 +46,11 @@ class MainPresenter(
     }
 
     override suspend fun onSuccess() {
-        val dbData = model.getDBData()
-        scope.launchOnMain { view.onSuccess(dbData as MainModel) }
+        getDBData()
     }
 
     override suspend fun onError(message : String) {
-        Log.e("ERR", message)
+        Log.e("ERROR", "API")
         getDBData()
     }
 
@@ -142,7 +143,7 @@ class MainPresenter(
         return facilitiesList
     }
 
-    override fun getFinalPosition(selectedPosition: Int): Int {
+    override fun getFinalScrollPosition(selectedPosition: Int): Int {
         return if(selectedPosition == 1) 0 else if (selectedPosition == 2) 3 else selectedPosition
     }
 }
