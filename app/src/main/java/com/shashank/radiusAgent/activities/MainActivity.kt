@@ -54,8 +54,8 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
     }
 
     override fun onSuccess(model : MainModel?) {
-        if (model == null)return
         binding.progress.visibility = View.GONE
+        if (model == null)return
         facilitiesList = presenter.processOptions(model)
         mainAdapter.addItems(applicationContext, facilitiesList, this@MainActivity, 0)
     }
