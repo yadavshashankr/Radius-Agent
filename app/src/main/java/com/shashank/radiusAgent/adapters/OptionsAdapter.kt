@@ -48,14 +48,12 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
             Constants.SELECTED_NAME = binding.tvOption.text.toString()
 
             val values = item.selectedFacility?.split("-")
-            try {
-                val valueFacilityID = values?.get(0)
-                val valueOptionsID = values?.get(1)
-                selectedOptionsContract.disableSelectedOptionsState(valueFacilityID as String, valueOptionsID as String, position)
-            }catch (e :java.lang.Exception){
-                e.printStackTrace()
-                selectedOptionsContract.disableSelectedOptionsState("", "", position)
-            }
+
+            val rt = values?.size != 1
+            val facId = if (rt) values?.get(0) else ""
+            val optId = if (rt) values?.get(1) else ""
+            selectedOptionsContract.disableSelectedOptionsState(facId as String, optId as String, position)
+
         }
     }
 

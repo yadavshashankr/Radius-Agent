@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOpt
 
     override fun disableSelectedOptionsState(valueFacilityID : String, valueOptionsID : String, selectedPosition : Int) {
         val facilitiesList = presenter.disableSelectedOptionsState(facilitiesList, valueFacilityID, valueOptionsID)
-        val finalPosition = if(selectedPosition == 1) 0 else if (selectedPosition == 2) 3 else selectedPosition
+        val finalPosition = presenter.getFinalPosition(selectedPosition)
         mainAdapter.addItems(this, facilitiesList, this, finalPosition)
     }
 }

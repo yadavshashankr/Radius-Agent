@@ -141,4 +141,8 @@ class MainPresenter(
         }
         return facilitiesList
     }
+
+    override fun getFinalPosition(selectedPosition: Int): Int {
+        return if(selectedPosition == 1) 0 else if (selectedPosition == 2) 3 else selectedPosition
+    }
 }

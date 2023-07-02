@@ -30,5 +30,7 @@ interface MainActivityContract {
     interface OptionsProcessor{
         fun disableSelectedOptionsState(facilitiesList : ArrayList<FacilityModel>, valueFacilityId : String, valueOptionsId : String) : ArrayList<FacilityModel>
         fun processOptions(model : MainModel): ArrayList<FacilityModel>
+
+        fun getFinalPosition(selectedPosition : Int) : Int
     }
 }
