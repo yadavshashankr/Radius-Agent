@@ -49,9 +49,9 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
 
             val values = item.selectedFacility?.split("-")
 
-            val rt = values?.size != 1
-            val facId = if (rt) values?.get(0) else ""
-            val optId = if (rt) values?.get(1) else ""
+            val areExcludedPositionsAvailable = values?.size != 1
+            val facId = if (areExcludedPositionsAvailable) values?.get(0) else ""
+            val optId = if (areExcludedPositionsAvailable) values?.get(1) else ""
             selectedOptionsContract.disableSelectedOptionsState(facId as String, optId as String, position)
 
         }
