@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.shashank.radiusAgent.contracts.SelectedOptionsContract
 import com.shashank.radiusAgent.network.model.FacilityModel
 import com.shashank.radiusAgent.adapters.MainAdapter
 import com.shashank.radiusAgent.contracts.MainActivityContract
@@ -17,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), MainActivityContract.View, SelectedOptionsContract {
+class MainActivity : AppCompatActivity(), MainActivityContract.View, MainActivityContract.SelectedOptionsProcessor {
 
     @Inject
     lateinit var apiService : ApiService

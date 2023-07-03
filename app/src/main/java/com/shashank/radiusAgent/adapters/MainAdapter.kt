@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.shashank.radiusAgent.contracts.SelectedOptionsContract
+import com.shashank.radiusAgent.contracts.MainActivityContract
 import com.shashank.radiusAgent.databinding.ViewHolderMainBinding
 import com.shashank.radiusAgent.network.model.FacilityModel
 import com.shashank.radiusAgent.network.model.OptionsModel
@@ -16,12 +16,12 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
 
     private var list = ArrayList<FacilityModel>()
     private lateinit var context : Context
-    private lateinit var selectedOptionsContract : SelectedOptionsContract
+    private lateinit var selectedOptionsProcessor : MainActivityContract.SelectedOptionsProcessor
     private var selectedPosition = 0
 
-    fun addItems(context : Context, facilitiesList : ArrayList<FacilityModel>, selectedOptionsContract : SelectedOptionsContract, selectedPosition : Int){
+    fun addItems(context : Context, facilitiesList : ArrayList<FacilityModel>, selectedOptionsProcessor : MainActivityContract.SelectedOptionsProcessor, selectedPosition : Int){
         this.context = context
-        this.selectedOptionsContract = selectedOptionsContract
+        this.selectedOptionsProcessor = selectedOptionsProcessor
         this.list = facilitiesList
         this.selectedPosition = selectedPosition
         notifyDataSetChanged()
@@ -41,11 +41,13 @@ class MainAdapter : RecyclerView.Adapter<MainAdapter.MyViewHolder>() {
         val item = this.list[position]
         binding.facilityModel = item
 
-        binding.rvOptions.layoutManager = LinearLayoutManager(context.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        val layoutManager = LinearLayoutManager(context.applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvOptions.layoutManager = layoutManager
+
         val optionsAdapter = OptionsAdapter()
         binding.rvOptions.adapter = optionsAdapter
 
-        optionsAdapter.addItems(context, item.options as ArrayList<OptionsModel>, selectedOptionsContract)
+        optionsAdapter.addItems(context, item.options as ArrayList<OptionsModel>, selectedOptionsProcessor)
         binding.rvOptions.scrollToPosition(selectedPosition)
     }
 

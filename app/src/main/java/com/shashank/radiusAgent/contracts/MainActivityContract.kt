@@ -33,4 +33,8 @@ interface MainActivityContract {
         fun processOptions(model : MainModel): ArrayList<FacilityModel>
         fun getFinalScrollPosition(selectedPosition : Int) : Int
     }
+
+    interface SelectedOptionsProcessor {
+        fun disableSelectedOptionsState(valueFacilityID : String, valueOptionsID : String, selectedPosition : Int)
+    }
 }

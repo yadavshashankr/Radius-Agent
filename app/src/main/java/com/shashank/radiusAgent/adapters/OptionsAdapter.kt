@@ -6,7 +6,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shashank.radiusAgent.contracts.SelectedOptionsContract
+import com.shashank.radiusAgent.contracts.MainActivityContract
 import com.shashank.radiusAgent.databinding.ViewHolderOptionsBinding
 import com.shashank.radiusAgent.globals.Constants
 import com.shashank.radiusAgent.network.model.OptionsModel
@@ -16,12 +16,12 @@ import com.shashank.radiusAgent.utils.OptionUtils
 class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
 
     private var list = ArrayList<OptionsModel>()
-    private lateinit var selectedOptionsContract : SelectedOptionsContract
+    private lateinit var selectedOptionsProcessor : MainActivityContract.SelectedOptionsProcessor
     private lateinit var context : Context
 
-    fun addItems(context: Context, arrayListOptionsModel : ArrayList<OptionsModel>, selectedOptionsContract : SelectedOptionsContract){
+    fun addItems(context: Context, arrayListOptionsModel : ArrayList<OptionsModel>, selectedOptionsProcessor : MainActivityContract.SelectedOptionsProcessor){
         this.context = context
-        this.selectedOptionsContract = selectedOptionsContract
+        this.selectedOptionsProcessor = selectedOptionsProcessor
         this.list = arrayListOptionsModel
         notifyDataSetChanged()
     }
@@ -52,7 +52,7 @@ class OptionsAdapter : RecyclerView.Adapter<OptionsAdapter.MyViewHolder>() {
             val areExcludedPositionsAvailable = values?.size != 1
             val facId = if (areExcludedPositionsAvailable) values?.get(0) else ""
             val optId = if (areExcludedPositionsAvailable) values?.get(1) else ""
-            selectedOptionsContract.disableSelectedOptionsState(facId as String, optId as String, position)
+            selectedOptionsProcessor.disableSelectedOptionsState(facId as String, optId as String, position)
 
         }
     }
