@@ -24,7 +24,6 @@ class FacilitiesRepository @Inject constructor(private val apiService : ApiServi
             }else{
                 onFinishListener.onError(response.errorBody().toString())
             }
-
         }catch (e : Exception){
             onFinishListener.onError(message = e.message.toString())
         }
