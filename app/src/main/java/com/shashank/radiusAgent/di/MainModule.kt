@@ -1,6 +1,7 @@
 package com.shashank.radiusAgent.di
 
 import android.app.Application
+import com.shashank.radiusAgent.contracts.MainActivityContract
 import com.shashank.radiusAgent.db.AppDatabase
 import com.shashank.radiusAgent.db.Dao
 import com.shashank.radiusAgent.globals.Constants
@@ -38,7 +39,7 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun providesMainModel(apiService : ApiService, dao: Dao): FacilitiesRepository {
+    fun providesMainModel(apiService : ApiService, dao: Dao): MainActivityContract.Model {
         return FacilitiesRepository(apiService, dao)
     }
 }
