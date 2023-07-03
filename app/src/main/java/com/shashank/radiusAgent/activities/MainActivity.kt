@@ -8,8 +8,6 @@ import com.shashank.radiusAgent.network.model.FacilityModel
 import com.shashank.radiusAgent.adapters.MainAdapter
 import com.shashank.radiusAgent.contracts.MainActivityContract
 import com.shashank.radiusAgent.databinding.ActivityMainBinding
-import com.shashank.radiusAgent.db.Dao
-import com.shashank.radiusAgent.network.api.ApiService
 import com.shashank.radiusAgent.presenter.MainPresenter
 import com.shashank.radiusAgent.repositories.FacilitiesRepository
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,9 +17,7 @@ import javax.inject.Inject
 class MainActivity : AppCompatActivity(), MainActivityContract.View, MainActivityContract.SelectedOptionsProcessor {
 
     @Inject
-    lateinit var apiService : ApiService
-    @Inject
-    lateinit var dao : Dao
+    lateinit var facilitiesRepository: FacilitiesRepository
     private lateinit var facilitiesList : ArrayList<FacilityModel>
     private lateinit var presenter : MainPresenter
     private var _binding : ActivityMainBinding? = null
@@ -35,7 +31,7 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View, MainActivit
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        presenter = MainPresenter(this, FacilitiesRepository(apiService, dao))
+        presenter = MainPresenter(this, facilitiesRepository)
 
         initView()
 

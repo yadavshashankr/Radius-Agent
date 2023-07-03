@@ -39,7 +39,7 @@ object MainModule {
 
     @Provides
     @Singleton
-    fun providesMainModel(apiService : ApiService, dao: Dao): MainActivityContract.Model {
+    fun providesFacilitiesRepository(apiService : ApiService, dao: Dao): MainActivityContract.Model {
         return FacilitiesRepository(apiService, dao)
     }
 }
