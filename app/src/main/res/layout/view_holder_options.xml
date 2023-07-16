@@ -44,6 +44,7 @@
             android:layout_marginTop="@dimen/_5sdp"
             android:background="@drawable/blue_button_selector"
             android:paddingHorizontal="@dimen/_6sdp"
+            android:textSize="@dimen/_8ssp"
             android:text="@{optionsModel.name}"
             android:textColor="@color/blue_button_text_selector"
             android:layout_width="0dp"
