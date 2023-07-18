@@ -1,0 +1,33 @@
+name: Android CI
+on:
+  pull_request_target:
+    types:
+      - closed
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: build release
+        run: ./gradlew assembleRelease
+      - name: list files
+        run: ls -lrt app/build/outputs/apk/release
+
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers
+          file: app/build/outputs/apk/release/app-release.apk
