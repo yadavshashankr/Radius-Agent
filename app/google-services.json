@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "175405817576",
+    "project_id": "radius-agent",
+    "storage_bucket": "radius-agent.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175405817576:android:24a86ca812f061aef6b35d",
+        "android_client_info": {
+          "package_name": "com.shashank.radiusAgent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175405817576-f5fmn4ijsjsgme5ecmc9jhn11h6csueu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVNgRTfV8SrYyjlO8IEiXjyLqA4Orex3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175405817576-f5fmn4ijsjsgme5ecmc9jhn11h6csueu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
