@@ -10,6 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: decode keystore
+        id: decode_keystore
+        uses: timheuer/base64-to-file@v1
+        with:
+          fileName: 'keystore/keystore.jks'
+          encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
+
       - name: set up JDK
         uses: actions/setup-java@v3
         with:
@@ -23,14 +30,6 @@ jobs:
             ~/.gradle/caches
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-
-      - name: decode keystore
-        id: decode_keystore
-        uses: timheuer/base64-to-file@v1
-        with:
-          fileName: 'keystore/keystore.jks'
-          encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
-      
 
       - name: build release
         env:
