@@ -8,6 +8,8 @@ plugins {
 
 ext.version_name = "v1.0.0-RC2"
 
+ext.release_notes = "Release testing"
+
 android {
     namespace 'com.shashank.radiusAgent'
     compileSdk 33
@@ -55,6 +57,10 @@ android {
 
 task printVersionName {
     println project.ext.version_name
+}
+
+task printReleaseNotes {
+    println project.ext.release_notes
 }
 
 dependencies {

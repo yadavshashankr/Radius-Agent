@@ -44,9 +44,18 @@ jobs:
           echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
         id: android_version
 
-      - name: get version
+      - name: version
         run: |
           echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV  
+
+      - name: retrieve release notes
+        run: |
+          echo "::set-output name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
+        id: android_version
+
+      - name: release notes
+        run: |
+          echo "release_notes=${{steps.android_version.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
 
       - name: set tag
         uses: ncipollo/release-action@v1
@@ -63,5 +72,6 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
+          release-notes: ${{env.release_notes}}
           groups: testers
           file: app/build/outputs/apk/release/app-release.apk
