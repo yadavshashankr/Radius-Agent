@@ -8,7 +8,7 @@ plugins {
 
 def build_versions = [:]
 build_versions.version_name = "v1.0.0-RC1"
-ext.version_name = build_versions
+ext.version_name = "v1.0.0-RC1"
 
 android {
     namespace 'com.shashank.radiusAgent'
