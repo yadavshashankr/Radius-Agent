@@ -7,7 +7,7 @@ plugins {
 }
 
 ext{
-    version_name = "v1.0.0-RC7"
+    version_name = "v1.0.0-RC8"
     release_notes = "MOB-002"
 }
 

@@ -45,8 +45,10 @@ jobs:
         id: android_version
 
       - name: version
+        env:
+          VERSION_NAMES: $(${{github.workspace}}/gradlew -q printVersionName)
         run: |
-          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV  
+          echo "$VERSION_NAMES >> $GITHUB_ENV  
 
       - name: retrieve release notes
         run: |
@@ -54,14 +56,16 @@ jobs:
         id: release_note
 
       - name: release notes
+        env:
+          RELEASE_NOTES: $(${{github.workspace}}/gradlew -q printReleaseNotes)
         run: |
-          echo "release_notes=${{steps.release_note.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
+          echo "$RELEASE_NOTES" >> $GITHUB_ENV  
 
       - name: set tag
         uses: ncipollo/release-action@v1
         with:
           artifacts: "app/build/outputs/apk/release/*.apk"
-          tag: ${{env.version_name}}
+          tag: $VERSION_NAMES
           token: ${{secrets.TOKEN}}
 
       - name: list files
@@ -74,13 +78,12 @@ jobs:
           app: ${{ secrets.FIREBASE_APP_ID }}
           credentials: ${{ secrets.FIREBASE_CREDENTIALS }}
           credentials-file: ${{ secrets.FIREBASE_CREDENTIALS_FILE }}  # Optional: This is ignored if credentials is defined.
-          release-notes: "${{env.release_notes}}"                    # Optional
+          release-notes: $RELEASE_NAMES                    # Optional
           release-notes-file: ""               # Optional
           testers: ""                          # Optional
           testers-file: ""                     # Optional
-          groups: ""                           # Optional
+          groups: "testers"                           # Optional
           groups-file: ""                      # Optional
           debug: false                         # Optional: Default false. A flag you can include to print verbose log output.
           cache: true                          # Optional: Default true. Whether to cache the firebase tools for next job, keeping this "true" will speed up the build.
           upgrade: true                        # Optional: Default true. Whether to attempt to upgrade firebase tools when cache is "true", turning this "false" will speed up the build.
-          token: ${{ secrets.FIREBASE_TOKEN }} # Deprecated
