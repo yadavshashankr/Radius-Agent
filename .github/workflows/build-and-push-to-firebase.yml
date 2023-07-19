@@ -18,24 +18,6 @@ jobs:
           fileDir: '/home/runner/work/Radius-Agent/Radius-Agent/app/keystore/'
           encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
 
-      - name: retrieve version
-        run: |
-          echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
-        id: android_version
-
-      - name: version
-        run: |
-          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV  
-
-      - name: retrieve release notes
-        run: |
-          echo "::set-output name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
-        id: release_notes
-
-      - name: release notes
-        run: |
-          echo "release_notes=${{steps.release_notes.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
-
       - name: set up JDK
         uses: actions/setup-java@v3
         with:
@@ -56,6 +38,24 @@ jobs:
           SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
         run: ./gradlew assembleRelease
+
+      - name: retrieve version
+        run: |
+          echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
+        id: android_version
+
+      - name: version
+        run: |
+          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV  
+
+      - name: retrieve release notes
+        run: |
+          echo "::set-output name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
+        id: release_notes
+
+      - name: release notes
+        run: |
+          echo "release_notes=${{steps.release_notes.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
 
       - name: set tag
         uses: ncipollo/release-action@v1
