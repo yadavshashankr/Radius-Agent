@@ -61,7 +61,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "app/build/outputs/apk/release/*.apk"
-          tag: ${VERSION_NAMES}
+          tag: ${{VERSION_NAMES}}
           token: ${{secrets.TOKEN}}
 
       - name: list files
@@ -74,7 +74,7 @@ jobs:
           app: ${{ secrets.FIREBASE_APP_ID }}
           credentials: ${{ secrets.FIREBASE_CREDENTIALS }}
           credentials-file: ${{ secrets.FIREBASE_CREDENTIALS_FILE }}  # Optional: This is ignored if credentials is defined.
-          release-notes: ${RELEASE_NOTES}                    # Optional
+          release-notes: ${{RELEASE_NOTES}}                    # Optional
           release-notes-file: ""               # Optional
           testers: ""                          # Optional
           testers-file: ""                     # Optional
