@@ -6,7 +6,7 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-ext.version_name = "v1.0.0-RC1"
+ext.version_name = "v1.0.0-RC2"
 
 android {
     namespace 'com.shashank.radiusAgent'
