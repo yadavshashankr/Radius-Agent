@@ -6,9 +6,10 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-ext.version_name = "v1.0.0-RC3"
-
-def release_notes = "MOB-001"
+ext{
+    version_name = "v1.0.0-RC3"
+    release_notes = "MOB-001"
+}
 
 android {
     namespace 'com.shashank.radiusAgent'
@@ -60,7 +61,7 @@ task printVersionName {
 }
 
 task printReleaseNotes {
-    println release_notes
+    println project.ext.release_notes
 }
 
 dependencies {
