@@ -6,7 +6,7 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-ext.version_name = "v1.0.0-RC2"
+ext.version_name = "v1.0.0-RC3"
 
 ext.release_notes = "Release testing"
 
