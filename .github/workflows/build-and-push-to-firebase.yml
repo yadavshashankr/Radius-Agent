@@ -3,8 +3,8 @@ on:
   pull_request_target:
     types:
       - closed
-env_var:
-  VERSION_NAMES: 1.0.0-RC1
+env:
+  VERSION_NAMES: 1.0.0-RC12
   RELEASE_NOTES: MOB-001
 jobs:
   if_merged:
@@ -48,9 +48,9 @@ jobs:
 
       - name: version
         env:
-          env_var.VERSION_NAMES: $(${{github.workspace}}/gradlew -q printVersionName)
+          env.VERSION_NAMES: $(${{github.workspace}}/gradlew -q printVersionName)
         run: |
-          echo "${{env_var.VERSION_NAMES}}"
+          echo "${{env.VERSION_NAMES}}"
 
       - name: retrieve release notes
         run: |
@@ -59,15 +59,15 @@ jobs:
 
       - name: release notes
         env:
-          env_var.RELEASE_NOTES: $(${{github.workspace}}/gradlew -q printReleaseNotes)
+          env.RELEASE_NOTES: $(${{github.workspace}}/gradlew -q printReleaseNotes)
         run: |
-          echo "${{env_var.RELEASE_NOTES}}"
+          echo "${{env.RELEASE_NOTES}}"
 
       - name: set tag
         uses: ncipollo/release-action@v1
         with:
           artifacts: "app/build/outputs/apk/release/*.apk"
-          tag: ${{env_var.VERSION_NAMES}}
+          tag: ${{env.VERSION_NAMES}}
           token: ${{secrets.TOKEN}}
 
       - name: list files
@@ -80,7 +80,7 @@ jobs:
           app: ${{ secrets.FIREBASE_APP_ID }}
           credentials: ${{ secrets.FIREBASE_CREDENTIALS }}
           credentials-file: ${{ secrets.FIREBASE_CREDENTIALS_FILE }}  # Optional: This is ignored if credentials is defined.
-          release-notes: ${{env_var.RELEASE_NOTES}}                  # Optional
+          release-notes: ${{env.RELEASE_NOTES}}                  # Optional
           release-notes-file: ""               # Optional
           testers: ""                          # Optional
           testers-file: ""                     # Optional
