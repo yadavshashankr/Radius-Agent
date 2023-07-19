@@ -6,6 +6,10 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+def build_versions = [:]
+build_versions.version_name = "1.0.0-RC1"
+ext.version_name = build_versions
+
 android {
     namespace 'com.shashank.radiusAgent'
     compileSdk 33
@@ -15,31 +19,13 @@ android {
         minSdk 24
         targetSdk 33
         versionCode 1
-        versionName "1.0.2"
+        versionName build_versions.version_name
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
-//    signingConfigs {
-//        release {
-//            storeFile file("Keystore.jks")
-//            storePassword Loca
-//            keyAlias "shashank"
-//            keyPassword "shashank123"
-//        }
-//    }
-
     signingConfigs {
         release {
-
-//            def tmpFilePath = System.getProperty("user.home") + "/work/_temp/keystore/"
-//            def allFilesFromDir = new File(tmpFilePath).listFiles()
-//
-//            if (allFilesFromDir != null) {
-//                def keystoreFile = allFilesFromDir.first()
-//                keystoreFile.renameTo("keystore/keystore.jks")
-//            }
-
             storeFile = file("keystore/keystore.jks")
             storePassword System.getenv("SIGNING_STORE_PASSWORD")
             keyAlias System.getenv("SIGNING_KEY_ALIAS")
@@ -49,11 +35,6 @@ android {
 
     buildTypes {
         release {
-            applicationVariants.all { variant ->
-                variant.outputs.all {
-                    outputFileName = "${rootProject.name}_${versionName}.apk"
-                }
-            }
             signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
@@ -72,6 +53,10 @@ android {
     dataBinding{
         enabled = true
     }
+}
+
+task printVersionName {
+    println project.ext.version_name
 }
 
 dependencies {

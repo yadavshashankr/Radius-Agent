@@ -39,11 +39,20 @@ jobs:
           SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
         run: ./gradlew assembleRelease
 
-      - name: set version to apk
+      - name: retrieve version
+        run: |
+          echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
+        id: android_version
+
+      - name: get version
+        run: |
+          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV  
+
+      - name: set tag
         uses: ncipollo/release-action@v1
         with:
           artifacts: "app/build/outputs/apk/release/*.apk"
-          tag: v1.0.2-RC${{github.run_number}}
+          tag: ${{env.version_name}}
           token: ${{secrets.TOKEN}}
 
       - name: list files
@@ -55,4 +64,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
-          file: app/build/outputs/apk/release/*.apk
+          file: app/build/outputs/apk/release/app-release.apk
