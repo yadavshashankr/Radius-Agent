@@ -51,8 +51,10 @@ android {
     }
 }
 
+ext.version_name = version
+
 task printVersionName {
-    println version
+    println project.ext.version_name
 }
 
 dependencies {
