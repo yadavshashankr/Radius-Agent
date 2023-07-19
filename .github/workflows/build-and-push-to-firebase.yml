@@ -68,10 +68,19 @@ jobs:
         run: ls -lrt app/build/outputs/apk/release
 
       - name: upload artifact to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        uses: nickwph/firebase-app-distribution-action@v1
         with:
-          appId: ${{secrets.FIREBASE_APP_ID}}
-          token: ${{secrets.FIREBASE_TOKEN}}
-          release-notes: ${{env.release_notes}}
-          groups: testers
           file: app/build/outputs/apk/release/app-release.apk
+          app: ${{ secrets.FIREBASE_APP_ID }}
+          credentials: ${{ secrets.FIREBASE_CREDENTIALS }}
+          credentials-file: ${{ secrets.FIREBASE_CREDENTIALS_FILE }}  # Optional: This is ignored if credentials is defined.
+          release-notes: "${{env.release_notes}}"                    # Optional
+          release-notes-file: ""               # Optional
+          testers: ""                          # Optional
+          testers-file: ""                     # Optional
+          groups: ""                           # Optional
+          groups-file: ""                      # Optional
+          debug: false                         # Optional: Default false. A flag you can include to print verbose log output.
+          cache: true                          # Optional: Default true. Whether to cache the firebase tools for next job, keeping this "true" will speed up the build.
+          upgrade: true                        # Optional: Default true. Whether to attempt to upgrade firebase tools when cache is "true", turning this "false" will speed up the build.
+          token: ${{ secrets.FIREBASE_TOKEN }} # Deprecated
