@@ -28,7 +28,7 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'keystore.jks'
+          fileName: 'keystore/keystore.jks'
           encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
 
       - name: build release
@@ -41,7 +41,7 @@ jobs:
       - name: set version to apk
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "app/build/outputs/apk/release/*"
+          artifacts: "app/build/outputs/apk/release/*.apk"
           tag: v1.0.RC${{github.run_number}}
           token: ${{secrets.TOKEN}}
 
