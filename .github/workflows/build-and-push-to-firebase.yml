@@ -48,7 +48,7 @@ jobs:
         env:
           VERSION_NAMES: $(${{github.workspace}}/gradlew -q printVersionName)
         run: |
-          echo "$VERSION_NAMES >> $GITHUB_ENV  
+          echo $VERSION_NAMES >> $GITHUB_ENV  
 
       - name: retrieve release notes
         run: |
@@ -59,7 +59,7 @@ jobs:
         env:
           RELEASE_NOTES: $(${{github.workspace}}/gradlew -q printReleaseNotes)
         run: |
-          echo "$RELEASE_NOTES" >> $GITHUB_ENV  
+          echo $RELEASE_NOTES >> $GITHUB_ENV  
 
       - name: set tag
         uses: ncipollo/release-action@v1
