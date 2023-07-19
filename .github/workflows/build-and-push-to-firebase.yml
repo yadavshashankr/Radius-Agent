@@ -41,21 +41,21 @@ jobs:
 
       - name: retrieve version
         run: |
-          echo "::set-output name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
+          echo "version_name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
         id: android_version
 
       - name: version
         run: |
-          echo "version_name=${{steps.android_version.outputs.VERSION_NAME}}" >> $GITHUB_ENV  
+          echo "version_name=${{env.version_name}}" >> $GITHUB_ENV
 
       - name: retrieve release notes
         run: |
-          echo "::set-output name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
+          echo "release_notes=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
         id: release_note
 
       - name: release notes
         run: |
-          echo "release_notes=${{steps.release_note.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
+          echo "release_notes=${{env.release_notes}}" >> $GITHUB_ENV
 
       - name: set tag
         uses: ncipollo/release-action@v1
