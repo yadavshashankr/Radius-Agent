@@ -41,17 +41,17 @@ jobs:
 
       - name: retrieve version
         run: |
-          echo "version_name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
+          echo "version_name=$(${{github.workspace}}/gradlew -q printVersionName)"
         id: android_version
+
+      - name: retrieve release notes
+        run: |
+          echo "release_notes=$(${{github.workspace}}/gradlew -q printReleaseNotes)"
+        id: release_note
 
       - name: version
         run: |
           echo "version_name=${{env.version_name}}" >> $GITHUB_ENV
-
-      - name: retrieve release notes
-        run: |
-          echo "release_notes=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
-        id: release_note
 
       - name: release notes
         run: |
