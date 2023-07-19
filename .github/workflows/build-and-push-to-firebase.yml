@@ -51,11 +51,11 @@ jobs:
       - name: retrieve release notes
         run: |
           echo "::set-output name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
-        id: android_version
+        id: release_notes
 
       - name: release notes
         run: |
-          echo "release_notes=${{steps.android_version.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
+          echo "release_notes=${{steps.release_notes.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
 
       - name: set tag
         uses: ncipollo/release-action@v1
