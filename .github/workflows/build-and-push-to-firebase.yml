@@ -43,7 +43,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           artifacts: "app/build/outputs/apk/release/*.apk"
-          tag: v1.0.RC${{github.run_number}}
+          tag: v1.0.2-RC${{github.run_number}}
           token: ${{secrets.TOKEN}}
 
       - name: list files
@@ -55,4 +55,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
-          file: app/build/outputs/apk/release/app-release.apk
+          file: app/build/outputs/apk/release/*.apk
