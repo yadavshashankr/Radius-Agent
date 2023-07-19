@@ -8,7 +8,7 @@ plugins {
 
 ext.version_name = "v1.0.0-RC3"
 
-ext.release_notes = "Release testing"
+def release_notes = "MOB-001"
 
 android {
     namespace 'com.shashank.radiusAgent'
@@ -60,7 +60,7 @@ task printVersionName {
 }
 
 task printReleaseNotes {
-    println project.ext.release_notes
+    println release_notes
 }
 
 dependencies {
