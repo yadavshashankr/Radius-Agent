@@ -51,11 +51,11 @@ jobs:
       - name: retrieve release notes
         run: |
           echo "::set-output name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
-        id: release_notes
+        id: release_note
 
       - name: release notes
         run: |
-          echo "release_notes=${{steps.release_notes.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
+          echo "release_notes=${{steps.release_note.outputs.RELEASE_NOTES}}" >> $GITHUB_ENV  
 
       - name: set tag
         uses: ncipollo/release-action@v1
@@ -72,6 +72,6 @@ jobs:
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
           token: ${{secrets.FIREBASE_TOKEN}}
-          release-notes: ${{env.release_notes}}
+          release-notes: ${{env.release_note}}
           groups: testers
           file: app/build/outputs/apk/release/app-release.apk
