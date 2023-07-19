@@ -12,7 +12,6 @@ import com.shashank.radiusAgent.globals.Constants
 
 
 class OptionUtils {
-
      companion object {
          fun processImageDrawable(context : Context, icon : String?, isEnabled : Boolean) : Drawable? {
              when(icon){
