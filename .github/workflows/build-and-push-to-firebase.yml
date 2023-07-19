@@ -28,7 +28,7 @@ jobs:
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'keystore/keystore.jks'
+          fileName: '/home/runner/work/Radius-Agent/Radius-Agent/app/keystore/keystore.jks'
           encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
 
       - name: build release
