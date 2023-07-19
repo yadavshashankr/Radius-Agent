@@ -29,7 +29,7 @@ jobs:
         uses: timheuer/base64-to-file@v1
         with:
           fileName: 'keystore/keystore.jks'
-          encodedString: ${{ secrets.KEYSTORE }}
+          encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
 
       - name: build and release
         uses: ncipollo/release-action@v1
