@@ -16,7 +16,7 @@ jobs:
           java-version: 17
           distribution: 'zulu'
 
-      - name: Cache Gradle and wrapper
+      - name: cache gradle & wrapper
         uses: actions/cache@v2
         with:
           path: |
@@ -24,17 +24,17 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
 
-      - name: Decode Keystore
+      - name: decode keystore
         id: decode_keystore
         uses: timheuer/base64-to-file@v1
         with:
-          fileName: 'keystore/keystore.jks'
+          fileName: 'keystore.jks'
           encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
 
-      - name: build and release
+      - name: set version to apk
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/release/*"
+          artifacts: "app/build/outputs/apk/release/*"
           tag: v1.0.RC${{github.run_number}}
           token: ${{secrets.TOKEN}}
 
