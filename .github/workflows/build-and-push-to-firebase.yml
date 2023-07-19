@@ -4,7 +4,7 @@ on:
     types:
       - closed
 env:
-  VERSION_NAMES: 1.0.0-RC12
+  VERSION_NAMES: 1.0.0-RC13
   RELEASE_NOTES: MOB-001
 jobs:
   if_merged:
@@ -50,7 +50,7 @@ jobs:
         env:
           env.VERSION_NAMES: $(${{github.workspace}}/gradlew -q printVersionName)
         run: |
-          echo "${{env.VERSION_NAMES}}"
+          echo "VERSION_NAMES='${{env.VERSION_NAMES}}'" >> $GITHUB_ENV
 
       - name: retrieve release notes
         run: |
@@ -61,7 +61,7 @@ jobs:
         env:
           env.RELEASE_NOTES: $(${{github.workspace}}/gradlew -q printReleaseNotes)
         run: |
-          echo "${{env.RELEASE_NOTES}}"
+          echo "RELEASE_NOTES='${{env.RELEASE_NOTES}}'" >> $GITHUB_ENV
 
       - name: set tag
         uses: ncipollo/release-action@v1
