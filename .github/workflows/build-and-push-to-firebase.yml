@@ -10,11 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: decode keystore
+      - name: Decode Keystore
         id: decode_keystore
-        uses: timheuer/base64-to-file@v1
+        uses: timheuer/base64-to-file@v1.2
         with:
-          fileName: 'keystore/keystore.jks'
+          fileName: 'keystore.jks'
+          fileDir: '/home/runner/work/Radius-Agent/Radius-Agent/app/keystore/'
           encodedString: ${{ secrets.SIGNING_KEY_STORE_BASE64 }}
 
       - name: set up JDK
