@@ -6,10 +6,6 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
-def build_versions = [:]
-build_versions.version_name = "v1.0.0-RC1"
-ext.version_name = "v1.0.0-RC1"
-
 android {
     namespace 'com.shashank.radiusAgent'
     compileSdk 33
@@ -19,7 +15,7 @@ android {
         minSdk 24
         targetSdk 33
         versionCode 1
-        versionName build_versions.version_name
+        versionName version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -56,7 +52,7 @@ android {
 }
 
 task printVersionName {
-    println project.ext.version_name
+    println version
 }
 
 dependencies {
