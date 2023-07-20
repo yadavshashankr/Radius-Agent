@@ -39,11 +39,15 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: retrieve version
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           echo ::set-env name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)
         id: android_version
 
       - name: retrieve release notes
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         run: |
           echo ::set-env name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)
         id: release_note
