@@ -7,8 +7,8 @@ plugins {
 }
 
 ext{
-    version_name = "v1.0.0-RC19"
-    release_notes = "MOB-003\nMOB-004\nMOB-005"
+    version_name = "v1.0.0-RC20"
+    release_notes = "Testing release notews !!"
 }
 
 android {
@@ -103,9 +103,6 @@ dependencies {
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:32.2.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
-
-    //Secure Storage
-    implementation "androidx.security:security-crypto:1.0.0"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
