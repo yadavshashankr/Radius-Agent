@@ -7,8 +7,8 @@ plugins {
 }
 
 ext{
-    version_name = "v1.0.0-RC15"
-    release_notes = "MOB-002"
+    version_name = "v1.0.0-RC16"
+    release_notes = "MOB-003\nMOB-004\nMOB-005"
 }
 
 android {
