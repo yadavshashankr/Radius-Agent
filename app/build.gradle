@@ -7,8 +7,8 @@ plugins {
 }
 
 ext{
-    version_name = "v1.0.0-RC22"
-    release_notes = "Removing Keystore file from project"
+    version_name = "v1.0.0-RC23"
+    release_notes = "Compressing apk."
 }
 
 android {
@@ -37,7 +37,8 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
