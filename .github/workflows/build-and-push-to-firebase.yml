@@ -40,12 +40,12 @@ jobs:
 
       - name: retrieve version
         run: |
-          echo ::set-env name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)"
+          echo ::set-env name=VERSION_NAME::$(${{github.workspace}}/gradlew -q printVersionName)
         id: android_version
 
       - name: retrieve release notes
         run: |
-          echo "::set-env name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)"
+          echo ::set-env name=RELEASE_NOTES::$(${{github.workspace}}/gradlew -q printReleaseNotes)
         id: release_note
 
       - name: set tag
